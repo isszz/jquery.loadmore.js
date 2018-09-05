@@ -1,3 +1,4 @@
+/*! jquery.loadmore@0.2 | https://github.com/isszz/jquery.loadmore.js */
 var defaults = {
 	scroll: !0,
 	more: null,
@@ -5,7 +6,10 @@ var defaults = {
 	moreTxt: '上拉继续加载',
 	loadTxt: '努力加载中...',
 	endTxt: '亲，已经到底了！',
+	notTxt: '暂无数据',
+	notTpl: '<div class="not-data"><i class="icon-data-sad"></i>{notTxt}</div>',
 };
+
 function Loadmore (element, options, callback) {
 	if (!callback) {
 		$(window).off('scroll.more');
@@ -39,7 +43,7 @@ Loadmore.prototype = {
 			setTimeout(function() {
 				_this.runtime.isLoad = !1;
 			}, 3000);
-			_this.loadTip();
+			_this.showLoad();
 			_this.callback(_this, 'next', _this.runtime.page);
 		});
 
@@ -66,34 +70,49 @@ Loadmore.prototype = {
 					}, 3000);
 					if (_this.options.more.length) {
 						_this.runtime.page++;
-						_this.loadTip();
+						_this.showLoad();
 						_this.callback(_this, 'next',  _this.runtime.page);
 					}
 				}
 			}
 		});
 	},
-	more: function() {
-		this.options.more.html(this.options.moreTxt).show();
-	},
-	loadTip: function() {
-		this.options.more.html('<i class="icon-spinner icon-spin-anim mr5"></i>' + this.options.loadTxt).show();
-	},
-	rest: function() {
+	reset: function() {
 		this.runtime.isEnd = !1;
 		this.runtime.isLoad = !0;
 		this.runtime.page = 1;
 		this.callback(this, 'first', 1);
 	},
-	end: function(isOver) {
+	end: function(isOver, ishideTxt) {
 		this.runtime.isLoad = !1;
 		if (isOver) {
-			this.options.more.html(this.options.endTxt);
 			this.runtime.isEnd = !0;
+			if ((ishideTxt || !1) == !1) {
+				this.options.more.html(this.options.endTxt);
+			}
 		}
+	},
+	more: function() {
+		this.options.more.html(this.options.moreTxt).show();
+	},
+	showLoad: function() {
+		this.options.more.html('<i class="icon-spinner icon-spin-anim mr5"></i>' + this.options.loadTxt).show();
+	},
+	notData: function(notTxt) {
+		this.runtime.isLoad = !1;
+		this.runtime.isEnd = !0;
+		this.runtime.page = 1;
+		var tips = notTxt || this.options.notTxt;
+		if (this.options.notTpl) {
+			if (this.options.notTpl.indexOf('{notTxt}') == -1) {
+				tips = this.options.notTpl;
+			} else {
+				tips = this.options.notTpl.replace('{notTxt}', tips);
+			}
+		}
+		$(this.element).html(tips);
 	}
 }
-
 $.fn.loadmore = function(callback, options) {
 	return this.each(function() {
 		if (!$.data(this, 'loadmore')) {
