@@ -1,8 +1,14 @@
 ### 用法
 ```
+var urlData = {},
+	listUrl = 'api/list';
+	
+// add url data
+urlData.cid = 1;
 $('#J_list').loadmore(function(more, page) {
+	urlData.page = page;
 	// 获取数据
-	$.getJSON(this.options.listUrl, urlData).done(function(res) {
+	$.getJSON(listUrl, urlData).done(function(res) {
 		// res = {errno: 0, message: 'more|none', data: { count:10, list: [{}, {}, {}, ...] }};
 		if(res.errno == 0) {
 			if (res.data.count > 0) {
