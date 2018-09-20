@@ -3,6 +3,7 @@
 $('#J_list').loadmore(function(more, page) {
 	// 获取数据
 	$.getJSON(this.options.listUrl, urlData).done(function(res) {
+		// res = {errno: 0, message: 'more|none', data: { count:10, list: [{}, {}, {}, ...] }};
 		if(res.errno == 0) {
 			if (res.data.count > 0) {
 				more.render(template('J_list_template', res.data), function(wrap, type) {
