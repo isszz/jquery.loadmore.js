@@ -2,13 +2,13 @@
 ```
 $('#J_list').loadmore(function(more, page) {
 	// 获取数据
-	$.getJSON(this.options.listUrl, urlData).done(function(result) {
-		if(result.errno == 0) {
-			if (result.data.count > 0) {
-				more.render(template('J_list_template', result.data), function(wrap, type) {
+	$.getJSON(this.options.listUrl, urlData).done(function(res) {
+		if(res.errno == 0) {
+			if (res.data.count > 0) {
+				more.render(template('J_list_template', res.data), function(wrap, type) {
 					// ...
 				});
-				if (result.message == 'more') {
+				if (res.message == 'more') {
 					more.more();
 				} else {
 					more.end(!0);
@@ -17,7 +17,7 @@ $('#J_list').loadmore(function(more, page) {
 				more.notData();
 			}
 		} else {
-			Q.tips({type: result.type, message: result.message, time: 3});
+			alert(res.message);
 		}
 		more.end();
 	});
