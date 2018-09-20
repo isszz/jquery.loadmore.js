@@ -28,12 +28,10 @@ $('#J_list').loadmore(function(more, page) {
 }, {notTxt: '暂无XX});
 
 #重置
-`
 $('#J_list').data('loadmore').reset();
-`
+
 #带callback方式重置
-`
 $('#J_list').data('loadmore').reset(function() {
 	$.getJSON();//...
 });
-`
+
