@@ -1,5 +1,5 @@
 #基础用法
-`
+``
 $('#J_list').loadmore(function(more, page) {
 	// 获取数据
 	$.getJSON(this.options.listUrl, urlData).done(function(result) {
@@ -26,7 +26,7 @@ $('#J_list').loadmore(function(more, page) {
 		more.end();
 	});
 }, {notTxt: '暂无XX
-`
+``
 #重置
 `
 $('#J_list').data('loadmore').reset();
