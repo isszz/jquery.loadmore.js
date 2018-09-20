@@ -6,11 +6,7 @@ $('#J_list').loadmore(function(more, page) {
 		if(result.errno == 0) {
 			if (result.data.count > 0) {
 				more.render(template('J_list_template', result.data), function(wrap, type) {
-					wrap.find('img').lazyload({
-						effect : 'fadeIn',
-						threshold: 100,
-						failureLimit: 10,
-					});
+					// ...
 				});
 				if (result.message == 'more') {
 					more.more();
