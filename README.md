@@ -1,4 +1,4 @@
-### 基础用法
+### 用法
 ```
 $('#J_list').loadmore(function(more, page) {
 	// 获取数据
